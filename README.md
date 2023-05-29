@@ -1,6 +1,6 @@
 # shortest_path_python
 
-A Python project to find the shortest path from 2 nodes in a bi-direction graph from a csv file
+A Python project for solving the shortest path between 2 nodes in a bi-direction graph from a csv file
 
 # How to use
 The code can be run from a terminal with this command:
