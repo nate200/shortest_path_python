@@ -19,6 +19,14 @@ def test_start_node_not_exist(startNode, goalNode):
 
     assert str(exc_info.value) == f"Node:[nonExistingNode] doesn't exist in the given graph file"
 
+def test_start_eq_goal():
+    filename = "t1.csv"
+    start = "A"
+    end = "A"
+    with pytest.raises(Exception) as exc_info:
+        graphSolver.solve_shortest_path_graph(filename, start, end)
+
+    assert str(exc_info.value) == f"start and destination node must not be the same: [{start} == {end}]"
 
 def test_csv_graph():
     node_A = Node('A')

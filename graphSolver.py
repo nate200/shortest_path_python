@@ -6,6 +6,8 @@ def solve_shortest_path_graph(filename: str, sNodeLabel: str, eNodeLabel: str):
         raise Exception(f"File:[{filename}] doesn't exist")
     graph = get_graph_from_csv(filename)
 
+    if sNodeLabel == eNodeLabel:
+        raise Exception(f"start and destination node must not be the same: [{sNodeLabel} == {eNodeLabel}]")
     if not sNodeLabel in graph:
         raise Exception(f"Node:[{sNodeLabel}] doesn't exist in the given graph file")
     if not eNodeLabel in graph:
