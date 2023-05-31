@@ -1,4 +1,4 @@
-import graphSolver
+from core import graphSolver
 
 def solve_graph_from_csv():
     filename: str = input('graph file name: ')

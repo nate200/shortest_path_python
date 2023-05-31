@@ -1,6 +1,6 @@
 import csv
 import os.path
-from graph_node import Node
+from models.graph_node import Node
 def solve_shortest_path_graph(filename: str, sNodeLabel: str, eNodeLabel: str):
     if not os.path.exists(filename):
         raise Exception(f"File:[{filename}] doesn't exist")

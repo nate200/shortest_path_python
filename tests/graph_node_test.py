@@ -1,5 +1,4 @@
-from graph_node import Node
-from unittest import TestCase
+from models.graph_node import Node
 
 def test_eq():
     expected = Node('A')

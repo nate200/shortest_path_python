@@ -1,7 +1,7 @@
-import graphSolver
 import pytest
 from unittest import TestCase
-from graph_node import Node
+from models.graph_node import Node
+from core import graphSolver
 
 def test_file_not_exist():
     filename = "whatever.haha"
