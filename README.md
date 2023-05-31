@@ -24,3 +24,6 @@ Path from A to B is unreachable
 
 # Unit Test
 This project uses **pytest**, you can run unit test of this project by using `pytest` command inside the directory
+
+# PEP 8
+This project uses **flake8**, you can run `flake8 <directory>` command inside the directory, where `<directory>` is a directory containing python files 
