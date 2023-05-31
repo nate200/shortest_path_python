@@ -1,13 +1,13 @@
 import pytest
 from unittest import TestCase
 from models.graph_node import Node
-from core import graphSolver
+from core import graph_solver
 
 
 def test_file_not_exist():
     filename = "whatever.haha"
     with pytest.raises(Exception) as exc_info:
-        graphSolver.solve_shortest_path_graph(filename, None, None)
+        graph_solver.solve_shortest_path_graph(filename, "A", "B")
 
     assert str(exc_info.value) == f"File:[{filename}] doesn't exist"
 
@@ -16,7 +16,7 @@ def test_file_not_exist():
 def test_start_node_not_exist(s_node, e_node):
     filename = "t1.csv"
     with pytest.raises(Exception) as exc_info:
-        graphSolver.solve_shortest_path_graph(filename, s_node, e_node)
+        graph_solver.solve_shortest_path_graph(filename, s_node, e_node)
 
     assert str(exc_info.value) == "Node:[nonExistingNode] doesn't exist in the given graph file"
 
@@ -26,7 +26,7 @@ def test_start_eq_goal():
     start = "A"
     end = "A"
     with pytest.raises(Exception) as exc_info:
-        graphSolver.solve_shortest_path_graph(filename, start, end)
+        graph_solver.solve_shortest_path_graph(filename, start, end)
 
     assert str(exc_info.value) == f"start and destination node must not be the same: [{start} == {end}]"
 
@@ -75,7 +75,7 @@ def test_csv_graph():
         '0': node_0,
     }
 
-    actual = graphSolver.read_graph_from_csv("t1.csv")
+    actual = graph_solver.read_graph_from_csv("t1.csv")
 
     TestCase().assertDictEqual(expected, actual)
 
@@ -85,7 +85,7 @@ def test_unreachable():
     s_node = "A"
     e_node = "I"
 
-    actual = graphSolver.solve_shortest_path_graph(filename, s_node, e_node)
+    actual = graph_solver.solve_shortest_path_graph(filename, s_node, e_node)
 
     assert actual is None
 
@@ -98,7 +98,7 @@ def test_unreachable():
     ("t1.csv", "F", "G", ["F", "H", "G"], 8),
     ("t1.csv", "F", "C", ["F", "H", "G", "C"], 10)])
 def test_shortest_path(file, s_node, e_node, expected_path, expected_cost):
-    actual = graphSolver.solve_shortest_path_graph(file, s_node, e_node)
+    actual = graph_solver.solve_shortest_path_graph(file, s_node, e_node)
 
     assert actual["cost"] == expected_cost
     assert all([a == b for a, b in zip(actual["path"], expected_path)])

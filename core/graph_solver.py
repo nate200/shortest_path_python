@@ -4,12 +4,13 @@ from models.graph_node import Node
 
 
 def solve_shortest_path_graph(filename: str, sNodeLabel: str, eNodeLabel: str):
+    if sNodeLabel is eNodeLabel:
+        raise Exception(f"start and destination node must not be the same: [{sNodeLabel} == {eNodeLabel}]")
+
     if not os.path.exists(filename):
         raise Exception(f"File:[{filename}] doesn't exist")
     graph = read_graph_from_csv(filename)
 
-    if sNodeLabel is eNodeLabel:
-        raise Exception(f"start and destination node must not be the same: [{sNodeLabel} == {eNodeLabel}]")
     if sNodeLabel not in graph:
         raise Exception(f"Node:[{sNodeLabel}] doesn't exist in the given graph file")
     if eNodeLabel not in graph:
