@@ -1,32 +1,24 @@
 import csv
 import os.path
 from models.graph_node import Node
+
+
 def solve_shortest_path_graph(filename: str, sNodeLabel: str, eNodeLabel: str):
     if not os.path.exists(filename):
         raise Exception(f"File:[{filename}] doesn't exist")
-    graph = get_graph_from_csv(filename)
+    graph = read_graph_from_csv(filename)
 
-    if sNodeLabel == eNodeLabel:
+    if sNodeLabel is eNodeLabel:
         raise Exception(f"start and destination node must not be the same: [{sNodeLabel} == {eNodeLabel}]")
-    if not sNodeLabel in graph:
+    if sNodeLabel not in graph:
         raise Exception(f"Node:[{sNodeLabel}] doesn't exist in the given graph file")
-    if not eNodeLabel in graph:
+    if eNodeLabel not in graph:
         raise Exception(f"Node:[{eNodeLabel}] doesn't exist in the given graph file")
 
-    sNode: Node = graph[sNodeLabel]
-    eNode: Node = graph[eNodeLabel]
-    find_shortest_path(graph, sNode, eNode)
-    currNode: Node = eNode
-    if currNode.fromNode:
-        path = []
-        while currNode.name != sNodeLabel:
-            path.append(currNode.name)
-            currNode = currNode.fromNode
-        path.append(sNodeLabel)
-        return {"path": path[::-1], "cost": eNode.currCost}
-    else:
-        return None
-def get_graph_from_csv(filename):
+    return get_answer_shortest_path(graph, sNodeLabel, eNodeLabel)
+
+
+def read_graph_from_csv(filename: str):
     graph = {}
     with open(filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
@@ -47,8 +39,25 @@ def get_graph_from_csv(filename):
 
             from_node.add_direction(toLabel, cost)
             to_node.add_direction(fromLabel, cost)
-    #print(str(graph))
+    # print(str(graph))
     return graph
+
+
+def get_answer_shortest_path(graph, sNodeLabel: str, eNodeLabel: str):
+    sNode: Node = graph[sNodeLabel]
+    eNode: Node = graph[eNodeLabel]
+    find_shortest_path(graph, sNode, eNode)
+    currNode: Node = eNode
+    if currNode.fromNode:
+        path = []
+        while currNode.name != sNodeLabel:
+            path.append(currNode.name)
+            currNode = currNode.fromNode
+        path.append(sNodeLabel)
+        return {"path": path[::-1], "cost": eNode.currCost}
+    else:
+        return None
+
 
 def find_shortest_path(graph, sNode: Node, eNode: Node):
     sNode.currCost = 0
